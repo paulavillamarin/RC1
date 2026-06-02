@@ -31,32 +31,89 @@ public class Main {
 
                 case 1:
 
-                    System.out.print("ID: ");
-                    String id = sc.nextLine();
+                    String id;
 
-                    System.out.print("Nombre: ");
-                    String nombre = sc.nextLine();
+                    do {
+                        System.out.print("ID: ");
+                        id = sc.nextLine().trim();
 
-                    System.out.print("Precio: ");
-                    double precio = sc.nextDouble();
+                        if (id.isEmpty()) {
+                            System.out.println("El ID no puede estar vacío.");
+                        } else if (inventario.buscarProducto(id) != null) {
+                            System.out.println("Ya existe un producto con ese ID.");
+                            id = "";
+                        }
 
-                    System.out.print("Cantidad: ");
-                    int cantidad = sc.nextInt();
+                    } while (id.isEmpty());
+
+                    String nombre;
+
+                    do {
+                        System.out.print("Nombre: ");
+                        nombre = sc.nextLine().trim();
+
+                        if (nombre.isEmpty()) {
+                            System.out.println("El nombre no puede estar vacío.");
+                        }
+
+                    } while (nombre.isEmpty());
+
+                    double precio;
+
+                    do {
+                        System.out.print("Precio: ");
+                        precio = sc.nextDouble();
+
+                        if (precio <= 0) {
+                            System.out.println("El precio debe ser mayor que 0.");
+                        }
+
+                    } while (precio <= 0);
+
+                    int cantidad;
+
+                    do {
+                        System.out.print("Cantidad: ");
+                        cantidad = sc.nextInt();
+
+                        if (cantidad <= 0) {
+                            System.out.println("La cantidad debe ser mayor que 0.");
+                        }
+
+                    } while (cantidad <= 0);
+
+                    int anio;
+                    int mes;
+                    int dia;
 
                     System.out.print("Año de caducidad: ");
-                    int anio = sc.nextInt();
+                    anio = sc.nextInt();
 
                     System.out.print("Mes de caducidad: ");
-                    int mes = sc.nextInt();
+                    mes = sc.nextInt();
 
-                    System.out.print("Dia de caducidad: ");
-                    int dia = sc.nextInt();
+                    System.out.print("Día de caducidad: ");
+                    dia = sc.nextInt();
 
-                    System.out.print("Dias de refrigeracion: ");
-                    int diasRef = sc.nextInt();
+                    int diasRef;
 
-                    System.out.print("Temperatura: ");
-                    double temperatura = sc.nextDouble();
+                    do {
+                        System.out.print("Días de refrigeración: ");
+                        diasRef = sc.nextInt();
+
+                        if (diasRef <= 0) {
+                            System.out.println("Debe ser mayor que 0.");
+                        }
+
+                    } while (diasRef <= 0);
+
+                    double temperatura;
+
+                    do {
+                        System.out.print("Temperatura: ");
+                        temperatura = sc.nextDouble();
+
+                    } while (temperatura < -50 || temperatura > 50);
 
                     ProductoPerecedero perecedero =
                             new ProductoPerecedero(
@@ -75,25 +132,82 @@ public class Main {
 
                 case 2:
 
-                    System.out.print("ID: ");
-                    String id2 = sc.nextLine();
+                    String id2;
 
-                    System.out.print("Nombre: ");
-                    String nombre2 = sc.nextLine();
+                    do {
+                        System.out.print("ID: ");
+                        id2 = sc.nextLine().trim();
 
-                    System.out.print("Precio: ");
-                    double precio2 = sc.nextDouble();
+                        if (id2.isEmpty()) {
+                            System.out.println("El ID no puede estar vacío.");
+                        } else if (inventario.buscarProducto(id2) != null) {
+                            System.out.println("Ya existe un producto con ese ID.");
+                            id2 = "";
+                        }
 
-                    System.out.print("Cantidad: ");
-                    int cantidad2 = sc.nextInt();
+                    } while (id2.isEmpty());
 
-                    System.out.print("Vida util (dias): ");
-                    int vidaUtil = sc.nextInt();
+                    String nombre2;
+
+                    do {
+                        System.out.print("Nombre: ");
+                        nombre2 = sc.nextLine().trim();
+
+                        if (nombre2.isEmpty()) {
+                            System.out.println("El nombre no puede estar vacío.");
+                        }
+
+                    } while (nombre2.isEmpty());
+
+                    double precio2;
+
+                    do {
+                        System.out.print("Precio: ");
+                        precio2 = sc.nextDouble();
+
+                        if (precio2 <= 0) {
+                            System.out.println("El precio debe ser mayor que 0.");
+                        }
+
+                    } while (precio2 <= 0);
+
+                    int cantidad2;
+
+                    do {
+                        System.out.print("Cantidad: ");
+                        cantidad2 = sc.nextInt();
+
+                        if (cantidad2 <= 0) {
+                            System.out.println("La cantidad debe ser mayor que 0.");
+                        }
+
+                    } while (cantidad2 <= 0);
+
+                    int vidaUtil;
+
+                    do {
+                        System.out.print("Vida útil (días): ");
+                        vidaUtil = sc.nextInt();
+
+                        if (vidaUtil <= 0) {
+                            System.out.println("Debe ser mayor que 0.");
+                        }
+
+                    } while (vidaUtil <= 0);
 
                     sc.nextLine();
 
-                    System.out.print("Categoria: ");
-                    String categoria = sc.nextLine();
+                    String categoria;
+
+                    do {
+                        System.out.print("Categoría(Electrónico/Limpieza/Otro): ");
+                        categoria = sc.nextLine().trim();
+
+                        if (categoria.isEmpty()) {
+                            System.out.println("La categoría no puede estar vacía.");
+                        }
+
+                    } while (categoria.isEmpty());
 
                     ProductoNoPerecedero noPerecedero =
                             new ProductoNoPerecedero(
@@ -106,6 +220,7 @@ public class Main {
                             );
 
                     inventario.agregarProducto(noPerecedero);
+                    System.out.println("Tipo de almacenamiento: " + noPerecedero.tipoAlmacenamiento());
 
                     break;
 
@@ -120,22 +235,61 @@ public class Main {
                     System.out.print("ID del producto: ");
                     String idVenta = sc.nextLine();
 
-                    System.out.print("Cantidad a vender: ");
-                    int cantVenta = sc.nextInt();
+                    Producto productoVenta = inventario.buscarProducto(idVenta);
 
-                    inventario.venderProducto(idVenta, cantVenta);
+                    if (productoVenta == null) {
+
+                        System.out.println("Producto no encontrado.");
+
+                    } else {
+
+                        int cantVenta;
+
+                        do {
+
+                            System.out.print("Cantidad a vender: ");
+                            cantVenta = sc.nextInt();
+
+                            if (cantVenta <= 0) {
+                                System.out.println("La cantidad debe ser mayor que 0.");
+                            }
+
+                        } while (cantVenta <= 0);
+
+                        inventario.venderProducto(idVenta, cantVenta);
+                    }
 
                     break;
+
 
                 case 5:
 
                     System.out.print("ID del producto: ");
                     String idCompra = sc.nextLine();
 
-                    System.out.print("Cantidad a comprar: ");
-                    int cantCompra = sc.nextInt();
+                    Producto productoCompra = inventario.buscarProducto(idCompra);
 
-                    inventario.comprarProducto(idCompra, cantCompra);
+                    if (productoCompra == null) {
+
+                        System.out.println("Producto no encontrado.");
+
+                    } else {
+
+                        int cantCompra;
+
+                        do {
+
+                            System.out.print("Cantidad a comprar: ");
+                            cantCompra = sc.nextInt();
+
+                            if (cantCompra <= 0) {
+                                System.out.println("La cantidad debe ser mayor que 0.");
+                            }
+
+                        } while (cantCompra <= 0);
+
+                        inventario.comprarProducto(idCompra, cantCompra);
+                    }
 
                     break;
 
